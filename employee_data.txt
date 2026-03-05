@@ -22,3 +22,9 @@ Email: abc@g.c
 Phone: 8901234567
 Username: abc4501
 ---
+EmpId: EMP-5602
+Name: DEF
+Email: def@g.c
+Phone: 9012345678
+Username: def5602
+---

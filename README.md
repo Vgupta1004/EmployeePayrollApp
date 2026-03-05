@@ -1,12 +1,14 @@
 # EmployeePayrollApp
 
-## Use Case 3: Payslip Generation
+## Use Case 4: Payslip Print/Download
 
 ### Description
-This is used to Generate detailed monthly payslip breakdown
+This is used to Generate downloadable payslip copy
 The flow -
- - Select Month
- - Calculate components
- - Format
- - Display
+ - Create original payslip
+ - Clone payslip for download
+ - Verify equality and identity
+ - Check download expiry
+ - Save payslip to files
+ - Print cloned payslip
  

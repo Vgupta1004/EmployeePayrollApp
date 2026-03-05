@@ -1,34 +1,61 @@
 package com.payroll.entity;
+import java.util.*;
 
-public class Payslip {
+/**
+ * Final class for Immutability
+ * Implements Cloneable to create safe copies for download
+ */
+public final class Payslip implements Cloneable{
 	
-	private Employee employee;          // Employee exists independently
-    private SalaryComponents components; // Components owned by Payslip
-    private String month;
+	private final String empId;
+    private final String empName;
+    private final String month;
+    private final double netPay;
 
-	public Payslip(Employee employee, SalaryComponents components, String month) {
-		this.employee = employee;
-        this.components = components;
+	public Payslip(String empId, String empName, String month, double netPay) {
+		this.empId = empId;
+        this.empName = empName;
         this.month = month;
+        this.netPay = netPay;
 	}
 	
-	@Override
+	public String getEmpId() { return empId; }
+    public String getMonth() { return month; }
+    
+    /**
+     * Creates a deep/safe copy of the payslip.
+     */
+    @Override
+    public Object clone() {
+        return new Payslip(this.empId, this.empName, this.month, this.netPay);
+    }
+    
+    /**
+     * Checks equality based on EmpID and Month.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payslip payslip = (Payslip) o;
+        return Objects.equals(empId, payslip.empId) && Objects.equals(month, payslip.month);
+    }
+    
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + empId.hashCode();
+        result = 31 * result + month.hashCode();
+        return result;
+    }
+	
+    @Override
     public String toString() {
-        // Formats data into a readable output [cite: 583-585]
-        return "\n=========== PAYSLIP ===========" +
-               "\nMonth          : " + month +
-               "\nEmployee ID    : " + employee.getEmpId() +
-               "\nEmployee Name  : " + employee.getName() +
-               "\n---- Earnings ----" +
-               "\nBasic Salary   : " + components.basicSalary +
-               "\nHRA            : " + components.hra +
-               "\nDA             : " + components.da +
-               "\nAllowances     : " + components.allowances +
-               "\n---- Deductions ----" +
-               "\nPF (12%)       : " + components.pf +
-               "\nTax (10%)      : " + components.tax +
-               "\nNet Pay        : " + components.netPay +
-               "\n==============================="; // [cite: 601-631]
+        return "PAYSLIP\n" +
+               "Employee ID : " + empId + "\n" +
+               "Employee Name: " + empName + "\n" +
+               "Month       : " + month + "\n" +
+               "Net Pay     : " + netPay + "\n"; // [cite: 851]
     }
 
 }
