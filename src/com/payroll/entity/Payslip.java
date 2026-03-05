@@ -21,6 +21,7 @@ public final class Payslip implements Cloneable{
 	
 	public String getEmpId() { return empId; }
     public String getMonth() { return month; }
+    public double getNetPay() { return netPay; }
     
     /**
      * Creates a deep/safe copy of the payslip.

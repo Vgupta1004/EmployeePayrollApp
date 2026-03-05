@@ -1,0 +1,5 @@
+PAYSLIP
+Employee ID : EMP-6719
+Employee Name: abc
+Month       : Feb
+Net Pay     : 463980.0

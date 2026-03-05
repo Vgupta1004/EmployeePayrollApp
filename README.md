@@ -1,14 +1,11 @@
 # EmployeePayrollApp
 
-## Use Case 4: Payslip Print/Download
+## Use Case 5: Dashboard Display
 
 ### Description
-This is used to Generate downloadable payslip copy
+This is used to Display personalized payroll dashboard.
 The flow -
- - Create original payslip
- - Clone payslip for download
- - Verify equality and identity
- - Check download expiry
- - Save payslip to files
- - Print cloned payslip
+ - Prepare historical data
+ - Request appropriate dashboard via factory
+ - Display role-specific metrics
  
