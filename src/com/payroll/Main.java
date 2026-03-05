@@ -1,14 +1,14 @@
 /**
- * Use Case 2: Employee Authentication
+ * Use Case 3: Payslip Generation
  * 
  * Flow:
- *  - Register user
- *  - Trigger Login
- *  - Receive Session
- *  - Validate Session state
+ *  - Select Month
+ *  - Calculate components
+ *  - Format
+ *  - Display
  *  
  * @author vgup3012
- * @version 2.0
+ * @version 3.0
  */
 package com.payroll;
 import java.util.*;
@@ -20,13 +20,15 @@ import com.payroll.session.*;
 import com.payroll.service.*;
 
 public class Main {
+	
+	private static Map<String, User> appUsers = new HashMap<>();
+	private static Map<String, Employee> employeeRecords = new HashMap<>();
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		Map<String, User> appUsers = new HashMap<>();
 		
 		System.out.println("-----Use Case 1: Employee Registration-----");
 		
@@ -52,32 +54,40 @@ public class Main {
             System.out.print("Create Password: ");
             String password = sc.nextLine();
             
-            System.out.print("Register as (1. Employee / 2. Manager): ");
-            int roleChoice = Integer.parseInt(sc.nextLine());
-            
-            if (roleChoice == 2) {
-                appUsers.put(username, new Manager(username, password));
-            } else {
-                appUsers.put(username, new RegularEmployee(username, password));
-            }
-            
+            appUsers.put(username, new RegularEmployee(username, password));
             UserAccount account = new UserAccount(username, password);
             Employee employee = new Employee(empId, name, email, phone, account);
+            employeeRecords.put(username, employee);
             
             employee.persist();
-            
-            System.out.println("\nEmployee Registered Successfully:");
-            System.out.println(employee.toString());
+            System.out.println("\nEmployee Registered Successfully!");
             
             System.out.println("\n----- Use Case 2: Employee Login -----");
             AuthenticationService auth = new AuthenticationService(appUsers);
-            
             Session session = auth.login();
-            
             if (session != null && !session.isExpired()) {
-                    System.out.println("\nLogin Successful!");
-                    System.out.println(session.toString()); // Displays active user [cite: 394]
-                    System.out.println("Session active and valid.");
+                System.out.println("\n----- Use Case 3: Payslip Generation -----");
+                
+                // Retrieve the actual Employee object for the logged-in user
+                Employee loggedInEmp = employeeRecords.get(username);
+                
+                System.out.print("Enter Month: ");
+                String month = sc.nextLine();
+                
+                System.out.print("Enter Basic Salary: ");
+                double basic = Double.parseDouble(sc.nextLine());
+                System.out.print("Enter HRA: ");
+                double hra = Double.parseDouble(sc.nextLine());
+                System.out.print("Enter DA: ");
+                double da = Double.parseDouble(sc.nextLine());
+                System.out.print("Enter Allowances: ");
+                double allowances = Double.parseDouble(sc.nextLine());
+
+                PayrollService payroll = new PayrollService();
+                Payslip payslip = payroll.generatePayslip(loggedInEmp, month, basic, hra, da, allowances);
+
+                // Display the final output [cite: 687, 699]
+                System.out.println(payslip.toString());
             }
             		
             

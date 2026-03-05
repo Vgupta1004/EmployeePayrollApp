@@ -1,12 +1,12 @@
 # EmployeePayrollApp
 
-## Use Case 2: Employee Authentication and Login
+## Use Case 3: Payslip Generation
 
 ### Description
-This is used to securely authenticate user and grant access to the dashboard
+This is used to Generate detailed monthly payslip breakdown
 The flow -
- - Registration of the user
- - Hash Verification
- - Session creation
- - Dashboard
+ - Select Month
+ - Calculate components
+ - Format
+ - Display
  
