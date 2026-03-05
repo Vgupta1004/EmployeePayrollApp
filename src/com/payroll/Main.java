@@ -1,13 +1,19 @@
 /**
- * Use Case 5: Dashboard Display
+ * Use Case 6: Input Validation Service
+ * 
+ * This class serves as a defensive boundary between user input and 
+ * application logic. It centralizes validation rules 
+ * using RegEx pattern matching and implements input sanitization 
+ * to ensure consistent behavior
  * 
  * Flow:
- *  - Prepare historical data
- *  - Request appropriate dashboard via factory
- *  - Display role-specific metrics
+ *  - Read raw user inputs from the console
+ *  - Delegate each input to the ValidationService.
+ *  - Stop immediately (fail-fast) if a ValidationException is thrown.
+ *  - Proceed only when all inputs are confirmed as valid.
  *  
  * @author vgup3012
- * @version 5.0
+ * @version 6.0
  */
 package com.payroll;
 import java.util.*;
@@ -21,8 +27,8 @@ import com.payroll.service.*;
 public class Main {
 
 	private static Map<String, User> appUsers = new HashMap<>();
-	private static Map<String, Employee> employeeRecords = new HashMap<>();
-	private static Map<String, String> userRoles = new HashMap<>();
+    private static Map<String, Employee> employeeRecords = new HashMap<>();
+    private static Map<String, String> userRoles = new HashMap<>();
 
 	/**
 	 * @param args
@@ -36,18 +42,18 @@ public class Main {
 		try {
 			System.out.print("Enter Employee ID (EMP-XXXX): ");
 			String empId = sc.nextLine();
-			Validator.validateEmpId(empId);
+			ValidationService.validateEmail(empId);
 
 			System.out.print("Enter Name: ");
 			String name = sc.nextLine();
 
 			System.out.print("Enter Email: ");
 			String email = sc.nextLine();
-			Validator.validateEmail(email);
+			ValidationService.validateEmail(email);
 
 			System.out.print("Enter Phone: ");
 			String phone = sc.nextLine();
-			Validator.validatePhone(phone);
+			ValidationService.validatePhone(phone);
 
 			System.out.print("Enter Role (EMPLOYEE/MANAGER): ");
 			String role = sc.nextLine().toUpperCase();
@@ -58,6 +64,7 @@ public class Main {
 
 			System.out.print("Create Password: ");
 			String password = sc.nextLine();
+			ValidationService.validatePassword(password);
 
 			if(role.equals("MANAGER")) {
 				appUsers.put(username, new Manager(username, password));

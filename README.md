@@ -1,11 +1,12 @@
 # EmployeePayrollApp
 
-## Use Case 5: Dashboard Display
+## Use Case 6: Input Validation Service
 
 ### Description
-This is used to Display personalized payroll dashboard.
+This is used to Validate all user inputs robustly.
 The flow -
- - Prepare historical data
- - Request appropriate dashboard via factory
- - Display role-specific metrics
+ - Read raw user inputs from the console
+ - Delegate each input to the ValidationService.
+ - Stop immediately (fail-fast) if a ValidationException is thrown.
+ - Proceed only when all inputs are confirmed as valid.
  
